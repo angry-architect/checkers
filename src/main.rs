@@ -1,6 +1,8 @@
+use std::io;
+
 struct Board {
-  black: u32,
-  white: u32,
+  light: u32,
+  dark: u32,
   kings: u32
 }
 
@@ -20,9 +22,9 @@ impl Board {
                     continue;
                 }
 
-                if cursor & self.black == cursor {
+                if cursor & self.dark == cursor {
                     print!("_*_|");
-                } else if cursor &  self.white == cursor {
+                } else if cursor &  self.light == cursor {
                     print!("_0_|");
                 } else {
                     print!("___|");
@@ -31,13 +33,13 @@ impl Board {
             }
             print!("\n");
         }
-        println!("\n*-black\n0-white");
+        println!("\n*-dark\n0-light");
     }
 
     fn move_(from: &str, to: &str) {
 
     }
-
+   
     fn decode(pos: &str)->u8 {
         //decode position to index for bitboard
         0
@@ -45,11 +47,30 @@ impl Board {
 }
 
 
+fn read_input()->String {
+    let mut line = String::new();
+    io::stdin().
+        read_line(&mut line).
+        expect("Can't read line");
+    line.trim().to_string()
+}
+
+
 fn main() {
     let board = Board {
-        white: 0b11111111_11110000_00000000_00000000,
-        black: 0b00000000_00000000_00001111_11111111,
+        light: 0b11111111_11110000_00000000_00000000,
+        dark:  0b00000000_00000000_00001111_11111111,
         kings: 0
     };
-    board.print();
+    loop {
+        board.print();
+        println!("Enter move or q for quit:");
+        let input = read_input();
+        if input == "q" {
+            break;
+        }
+        //
+    }
+
+    
 }
